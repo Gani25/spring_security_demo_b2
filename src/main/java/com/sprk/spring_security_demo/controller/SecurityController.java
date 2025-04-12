@@ -33,4 +33,10 @@ public class SecurityController {
     public String user() {
         return "Welcome to Spring Security Demo USER PAGE";
     }
+
+    @GetMapping("/tester")
+    @PreAuthorize("hasAuthority('ROLE_TESTER')")
+    public String tester() {
+        return "Welcome to Spring Security Demo TESTER PAGE";
+    }
 }
