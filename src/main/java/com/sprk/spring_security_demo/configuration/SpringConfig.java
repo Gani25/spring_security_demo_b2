@@ -30,14 +30,7 @@ public class SpringConfig {
     public UserDetailsService userDetailsService(){
         return new CustomUserDetailsService();
     }
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setPasswordEncoder(passwordEncoder());
-        authProvider.setUserDetailsService(userDetailsService());
 
-        return authProvider;
-    }
 
 
     /*@Bean
@@ -83,5 +76,13 @@ public class SpringConfig {
 
         return http.build();
 
+    }
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService());
+
+        return authProvider;
     }
 }

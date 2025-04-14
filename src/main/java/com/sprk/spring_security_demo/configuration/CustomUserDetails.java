@@ -6,16 +6,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
     // FIELDS
-    private List<GrantedAuthority> authorities;
+    private Set<GrantedAuthority> authorities;
     private String username;
     private String password;
 
@@ -23,9 +20,18 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(UserInfo userInfo) {
         this.username = userInfo.getUsername();
         this.password = userInfo.getPassword();
-        this.authorities = userInfo.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .collect(Collectors.toList());
+        if(userInfo.getRoles() != null) {
+            this.authorities = userInfo.getRoles().stream()
+                    .map(role -> {
+                        System.out.println("Role: "+role.getRole());
+                        return new SimpleGrantedAuthority(role.getRole());
+                    })
+                    .collect(Collectors.toSet());
+        }else {
+            System.out.println("Warning: roles were null");
+            this.authorities = new HashSet<>();
+        }
+
         /*
         Set<RoleModel> roles = userInfo.getRoles();
         List<GrantedAuthority> authorities = new ArrayList<>(); // Empty
