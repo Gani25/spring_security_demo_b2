@@ -65,7 +65,7 @@ public class SpringConfig {
         );
         http.authorizeHttpRequests(req ->
                 req
-                        .requestMatchers("/", "/welcome")
+                        .requestMatchers("/", "/welcome","/signup")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
